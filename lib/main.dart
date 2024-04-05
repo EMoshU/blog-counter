@@ -86,14 +86,10 @@ class MyHomePage extends StatelessWidget {
                 const Text(
                   'ボタンを押した回数',
                 ),
-                Builder(
-                  builder: (context) {
-                    return Text(
-                      '${MyCounter.of(context).count}',
-                      style: Theme.of(context).textTheme.headline4,
-                    );
-                  },
-                ),
+                 Text(
+                   '${MyCounter.of(context).count}',
+                   style: Theme.of(context).textTheme.headline4,
+                 )
               ],
             ),
           ],
