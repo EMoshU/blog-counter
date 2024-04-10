@@ -87,7 +87,10 @@ class MyHomePage extends StatelessWidget {
                 const Text(
                   'ボタンを押した回数',
                 ),
-                 CounterCard(counter: counter)
+                Text(
+                  '${counter.count}',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
               ],
             ),
           ],
@@ -98,39 +101,6 @@ class MyHomePage extends StatelessWidget {
           counter.increment();
         },
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class CounterCard extends StatelessWidget {
-  const CounterCard({
-    super.key,
-    required this.counter,
-  });
-
-  final MyCounterState counter;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.settings_accessibility_outlined,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '${counter.count}',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ),
-        ],
       ),
     );
   }
