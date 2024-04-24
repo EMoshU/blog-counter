@@ -4,104 +4,64 @@ void main() {
   runApp(const MyApp());
 }
 
-class _InheritedCounter extends InheritedWidget {
-  const _InheritedCounter({
-    required this.data,
-    required super.child,
-  });
-
-  final MyCounterState data;
-
-  @override
-  bool updateShouldNotify(_InheritedCounter oldWidget) => true;
-}
-
-class MyCounter extends StatefulWidget {
-  const MyCounter({
-    super.key,
-    required this.child,
-  });
-
-  final Widget child;
-
-  static MyCounterState of(BuildContext context, {bool rebuild = true}) {
-    return rebuild
-        ? context.dependOnInheritedWidgetOfExactType<_InheritedCounter>()!.data
-        : (context
-        .getElementForInheritedWidgetOfExactType<_InheritedCounter>()!
-        .widget as _InheritedCounter)
-        .data;
-  }
-
-  @override
-  State<MyCounter> createState() => MyCounterState();
-}
-
-class MyCounterState extends State<MyCounter> {
-  int count = 0;
-
-  void increment() => setState(() {
-    count++;
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return _InheritedCounter(
-      data: this,
-      child: widget.child,
-    );
-  }
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MyCounter(
-      child: MaterialApp(
-        home: MyHomePage(),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var counter = MyCounter.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text('First Page'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'ボタンを押した回数',
-                ),
-                Text(
-                  '${counter.count}',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          counter.increment();
-        },
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
